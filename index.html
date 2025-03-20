@@ -21,7 +21,7 @@
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
         }
         .login-container h1 {
-            font-size: 36px;
+            font-size: 26px;
             color: #007bff;
             font-weight: bold;
         }
@@ -71,6 +71,12 @@
             margin-top: 10px;
             cursor: pointer;
         }
+        .error-message {
+            display: none;
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
     </style>
     <script>
         function showPasswordField() {
@@ -78,6 +84,9 @@
             document.getElementById("nextButton").style.display = "none";
             document.getElementById("passwordContainer").style.display = "block";
             document.getElementById("forgotPassword").style.display = "block";
+        }
+        function showError() {
+            document.getElementById("errorMessage").style.display = "block";
         }
     </script>
 </head>
@@ -92,7 +101,8 @@
         <div id="passwordContainer" class="password-container">
             <p>jnfdkljfd <a href="#" style="color:#007bff; font-size:14px;">Change</a></p>
             <input type="password" placeholder="Password">
-            <button>Log in</button>
+            <button onclick="showError()">Log in</button>
+            <p id="errorMessage" class="error-message">Error: Invalid login credentials</p>
         </div>
         <p id="forgotPassword" class="forgot-password">Forgot password?</p>
         <button class="signup">Sign up</button>
