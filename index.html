@@ -37,6 +37,9 @@
             border-radius: 6px;
             font-size: 16px;
         }
+        .password-container {
+            display: none;
+        }
         .login-container button {
             width: 100%;
             padding: 12px;
@@ -61,14 +64,37 @@
         .signup:hover {
             background-color: #e6f0ff;
         }
+        .forgot-password {
+            display: none;
+            color: #007bff;
+            font-size: 14px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
     </style>
+    <script>
+        function showPasswordField() {
+            document.getElementById("emailInput").style.display = "none";
+            document.getElementById("nextButton").style.display = "none";
+            document.getElementById("passwordContainer").style.display = "block";
+            document.getElementById("forgotPassword").style.display = "block";
+        }
+    </script>
 </head>
 <body>
     <div class="login-container">
         <h1>venmo</h1>
         <h2>Log in</h2>
-        <input type="text" placeholder="Enter email, mobile, or username">
-        <button>Next</button>
+        <div id="emailInput">
+            <input type="text" placeholder="Enter email, mobile, or username">
+            <button id="nextButton" onclick="showPasswordField()">Next</button>
+        </div>
+        <div id="passwordContainer" class="password-container">
+            <p>jnfdkljfd <a href="#" style="color:#007bff; font-size:14px;">Change</a></p>
+            <input type="password" placeholder="Password">
+            <button>Log in</button>
+        </div>
+        <p id="forgotPassword" class="forgot-password">Forgot password?</p>
         <button class="signup">Sign up</button>
     </div>
 </body>
