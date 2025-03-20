@@ -19,6 +19,21 @@
             padding: 40px;
             border-radius: 10px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .error-box {
+            display: none;
+            background-color: red;
+            color: white;
+            padding: 10px;
+            border-radius: 6px;
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            text-align: center;
+            font-size: 14px;
         }
         .login-container h1 {
             font-size: 26px;
@@ -71,12 +86,6 @@
             margin-top: 10px;
             cursor: pointer;
         }
-        .error-message {
-            display: none;
-            color: red;
-            font-size: 14px;
-            margin-top: 10px;
-        }
     </style>
     <script>
         function showPasswordField() {
@@ -86,12 +95,13 @@
             document.getElementById("forgotPassword").style.display = "block";
         }
         function showError() {
-            document.getElementById("errorMessage").style.display = "block";
+            document.getElementById("errorBox").style.display = "block";
         }
     </script>
 </head>
 <body>
     <div class="login-container">
+        <div id="errorBox" class="error-box">Error: Invalid login credentials</div>
         <h1>venmo</h1>
         <h2>Log in</h2>
         <div id="emailInput">
@@ -102,7 +112,6 @@
             <p>jnfdkljfd <a href="#" style="color:#007bff; font-size:14px;">Change</a></p>
             <input type="password" placeholder="Password">
             <button onclick="showError()">Log in</button>
-            <p id="errorMessage" class="error-message">Error: Invalid login credentials</p>
         </div>
         <p id="forgotPassword" class="forgot-password">Forgot password?</p>
         <button class="signup">Sign up</button>
